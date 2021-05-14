@@ -29,13 +29,13 @@ if (status != true)
 var type = ($("#hidRIDSave").val() == "") ? "POST" : "PUT";
  $.ajax(
  {
- url : "ResearchersAPI",
+ url : "ResearchesAPI",
  type : type,
  data : $("#formResearch").serialize(),
  dataType : "text",
  complete : function(response, status)
  {
- onBuyerSaveComplete(response.responseText, status);
+ onResearchSaveComplete(response.responseText, status);
  
 }
  });
@@ -73,12 +73,91 @@ if (status == "success")
 // UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
-$("#hidRIDSave").val($(this).data("bno")); 
- $("#buyerID").val($(this).closest("tr").find('td:eq(0)').text());
- $("#name").val($(this).closest("tr").find('td:eq(1)').text());
- $("#address").val($(this).closest("tr").find('td:eq(2)').text());
- $("#phone").val($(this).closest("tr").find('td:eq(3)').text());
- $("#email").val($(this).closest("tr").find('td:eq(4)').text());
- $("#projectName").val($(this).closest("tr").find('td:eq(5)').text());
+$("#hidRIDSave").val($(this).closest("tr").find('#hidRIDUpdate').val());
+ $("#rName").val($(this).closest("tr").find('td:eq(0)').text());
+ $("#rPhone").val($(this).closest("tr").find('td:eq(1)').text());
+ $("#rEmail").val($(this).closest("tr").find('td:eq(2)').text());
+ $("#rAddress").val($(this).closest("tr").find('td:eq(3)').text());
+ $("#projectName").val($(this).closest("tr").find('td:eq(4)').text());
+ $("#rCost").val($(this).closest("tr").find('td:eq(5)').text());
 
 });
+
+//DELETE==========================================
+$(document).on("click", ".btnRemove", function(event)
+{
+ $.ajax(
+ {
+ url : "ResearchesAPI",
+ type : "DELETE",
+ data : "RID=" + $(this).data("rid"),
+ dataType : "text",
+ complete : function(response, status)
+ {
+ onResearchDeleteComplete(response.responseText, status);
+ }
+ });
+});
+
+function onResearchDeleteComplete(response, status)
+{
+if (status == "success")
+ {
+ var resultSet = JSON.parse(response);
+ if (resultSet.status.trim() == "success")
+ {
+ $("#alertSuccess").text("Successfully deleted.");
+ $("#alertSuccess").show();
+ $("#divResearchesGrid").html(resultSet.data);
+ } else if (resultSet.status.trim() == "error")
+ {
+ $("#alertError").text(resultSet.data);
+ $("#alertError").show();
+ }
+ } else if (status == "error")
+ {
+ $("#alertError").text("Error while deleting.");
+ $("#alertError").show();
+ } else
+ {
+ $("#alertError").text("Unknown error while deleting..");
+ $("#alertError").show();
+ }
+}
+
+// CLIENT-MODEL================================================================
+function validateResearchForm()
+{
+	
+// Research Name----------------------
+if ($("#rName").val().trim() == "")
+ {
+ return "Insert Research Name.";
+ }
+// Phone-------------------------------
+if ($("#rPhone").val().trim() == "")
+ {
+ return "Insert Phone Number.";
+ }
+// Email-------------------------------
+if ($("#rEmail").val().trim() == "")
+ {
+ return "Insert Email.";
+ }
+// Address-------------------------------
+if ($("#rAddress").val().trim() == "")
+ {
+ return "Insert Address.";
+ }
+// Project Name-------------------------------
+if ($("#projectName").val().trim() == "")
+ {
+ return "Insert Project Name.";
+ }
+// Cost------------------------
+if ($("#rCost").val().trim() == "")
+ {
+ return "Insert Cost.";
+ }
+return true;
+}

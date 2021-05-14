@@ -71,12 +71,7 @@ package com;
 			 {return "Error while connecting to the database for reading."; }
 			 
 			 // Prepare the html table to be displayed
-			 output = "<table border='1'><tr><th>Research Name</th><th>Phone</th>" +
-			 "<th>Email</th>" +
-			 "<th>Address</th>" +
-			 "<th>Project Name</th>" +
-			 "<th>Cost</th>" +
-			 "<th>Update</th><th>Remove</th></tr>";
+			 output = "<table border=\'1\'><tr><th>Research Name</th><th>phone</th><th>Email</th><th>Address</th><th>Project Name</th><th>Cost</th><th>Update</th><th>Remove</th></tr>";
 
 			 String query = "select * from research";
 			 Statement stmt = con.createStatement();
@@ -95,8 +90,7 @@ package com;
 			 
 			 // Add into the html table
 			 
-			 output += "<tr><td><input id='hidRIDUpdate' name='hidRIDUpdate' type='hidden' value='" + RID + "'>" + rName + "</td>";
-			 output += "<tr><td>" + rName + "</td>";
+			 output += "<tr><td><input id=\'hidRIDUpdate\' name=\'hidRIDUpdate\' type=\'hidden\' value=\'" + RID + "'>" + rName + "</td>"; 
 			 output += "<td>" + rPhone + "</td>";
 			 output += "<td>" + rEmail + "</td>";
 			 output += "<td>" + rAddress + "</td>";
@@ -105,10 +99,8 @@ package com;
 			 
 			 // buttons
 			 output += "<td><input name='btnUpdate' type='button' value='Update'class='btnUpdate btn btn-secondary'></td>"
-			 + "<td><form method='post' action='research.jsp'>"
-			 + "<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
-			 + "<input name='hidItemIDDelete' type='hidden' value='" + RID
-			 + "'>" + "</form></td></tr>";
+			 + "<td><input name='btnRemove' type='button' value='Remove' class='btn btn-danger' data-rid='"
+			 + RID + "'>" + "</td></tr>";
 			 }
 			 con.close();
 			 
