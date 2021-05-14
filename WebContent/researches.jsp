@@ -1,3 +1,4 @@
+<%@page import="com.research"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -9,7 +10,11 @@
 <script src="Components/researches.js"></script>
 <title>Insert title here</title>
 </head>
+
 <body>
+<div class="container"><div class="row"><div class="col-6">
+<h1>Research Service </h1>
+
 <form id="formResearch" name="formResearch" method="post" action="researches.jsp">
 Researcher Name:
 <input id="rName" name="rName" type="text"
@@ -21,7 +26,7 @@ class="form-control form-control-sm">
 <input id="rEmail" name="rEmail" type="text"
 class="form-control form-control-sm">
 <br> Address:
-<input id="rAddressc" name="rAddress" type="text"
+<input id="rAddress" name="rAddress" type="text"
 class="form-control form-control-sm">
 <br> Project Name:
 <input id="projectName" name="projectName" type="text"
@@ -34,6 +39,17 @@ class="form-control form-control-sm">
 class="btn btn-primary">
 <input type="hidden" id="hidRIDSave" name="hidRIDSave" value="">
 </form>
+
+<div id="alertSuccess" class="alert alert-success"></div>
+<div id="alertError" class="alert alert-danger"></div>
+<br>
+<div id="divResearchesGrid">
+ <%
+ research researchObj = new research();
+ out.print(researchObj.readResearch());
+ %>
+</div>
+</div> </div> </div>
 
 </body>
 </html>
